@@ -9,8 +9,11 @@ dependencies = [
     "langchain>=1.4.4",
     "langchain-community>=0.4.2",
     "langchain-core>=1.6.9",
+    "langchain-mcp-adapters>=0.3.2",
     "langchain-openai>=1.7.0",
     "langgraph>=1.2.14",
     "langgraph-api>=0.16.2",
     "langgraph-cli[inmem]>=0.4.37",
+    "mcp>=1.30.0",
+    "tavily>=1.1.0",
 ]
