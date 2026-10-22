@@ -1,7 +1,7 @@
 # Learning-AI
 We will learn about Agents.
 - How they are created?
-- How they are interacted with LLM?
+- How to interact with LLM, calling external resources, memory management and subagents invocation.
 
 ### Local llm setup
 
