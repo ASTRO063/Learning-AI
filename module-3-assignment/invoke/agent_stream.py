@@ -11,16 +11,16 @@ from rich.panel import Panel
 
 console = Console()
 
-async def stream_agent_execution(input_data: Any, config: dict, agent):
+async def stream_agent_execution(input_data: Any, agent):
     """
     Streams agent events and recursively handles interrupts when triggered.
     """
     in_tool_call = False
     full_response = ""
 
+    ## TODO - 4.b - Update your agent configuration to maintain previous state checkpoint
     async for event in agent.astream_events(
         input_data,
-        config=config,
         version="v2"
     ):
         event_type = event["event"]
@@ -39,7 +39,7 @@ async def stream_agent_execution(input_data: Any, config: dict, agent):
                     resume_command = await render_and_prompt_approval(interrupt_val)
                     
                     # 2. Resume execution recursively with the decision command
-                    await stream_agent_execution(resume_command, config, agent)
+                    await stream_agent_execution(resume_command, agent)
                     return
 
         # 2. Catch streaming LLM tokens
@@ -115,7 +115,7 @@ async def decision(args: Any, tool_name: Any):
     choices = [
         Choice("Approve execution", value="approve"),
         Choice("Edit content / arguments", value="edit"),
-        Choice("Provide feedback / instructions", value="respond"),
+        # Choice("Provide feedback / instructions", value="respond"),
         Choice("Reject execution", value="reject"),
     ]
         
@@ -133,11 +133,13 @@ async def decision(args: Any, tool_name: Any):
     
     if selected_action == "approve":
         console.print("[bold green]✔ Action Approved.[/bold green]\n")
-        return Command(resume={"decisions": [{"type": "approve"}]})
+        ## TODO - 6 - Fix the command
+        return Command(resume={"decisions": []})
 
     elif selected_action == "reject":
         console.print("[bold red]✘ Action Rejected.[/bold red]\n")
-        return Command(resume={"decisions": [{"type": "reject"}]})
+        ## TODO - 6 - Fix the command
+        return Command(resume={"decisions": []})
 
     elif selected_action == "edit":
         if "content" in args:
@@ -169,9 +171,9 @@ async def decision(args: Any, tool_name: Any):
             ]
         })
 
-    elif selected_action == "respond":
-            feedback = await questionary.text("Enter instructions for the agent:").ask_async()
-            return Command(resume={"decisions": [{"type": "respond", "message": feedback}]})
+    # elif selected_action == "respond":
+    #         feedback = await questionary.text("Enter instructions for the agent:").ask_async()
+    #         return Command(resume={"decisions": [{"type": "respond", "message": feedback}]})
 
     return Command(resume={"decisions": [{"type": "reject"}]})
     

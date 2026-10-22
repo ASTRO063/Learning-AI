@@ -35,8 +35,6 @@ async def run_terminal_agent(agent):
         )
     )
 
-    config = {"configurable": {"thread_id": "1"}}
-
     while True:
         try:
             user_input = Prompt.ask("\n[bold blue]User[/bold blue]").strip()
@@ -57,7 +55,7 @@ async def run_terminal_agent(agent):
 
             # Initiate graph stream with human message
             llm_input = {"messages": [HumanMessage(content=user_input)]}
-            await stream_agent_execution(llm_input, config, agent)
+            await stream_agent_execution(llm_input, agent)
 
             console.print()
 
