@@ -5,15 +5,19 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "gitpython>=3.2.1",
     "ipywidgets>=8.1.9",
     "langchain>=1.4.4",
     "langchain-community>=0.4.2",
     "langchain-core>=1.6.9",
+    "langchain-google-genai>=4.4.1",
     "langchain-mcp-adapters>=0.3.2",
     "langchain-openai>=1.7.0",
     "langgraph>=1.2.14",
     "langgraph-api>=0.16.2",
     "langgraph-cli[inmem]>=0.4.37",
     "mcp>=1.30.0",
+    "questionary>=2.1.1",
+    "rich>=15.0.0",
     "tavily>=1.1.0",
 ]
